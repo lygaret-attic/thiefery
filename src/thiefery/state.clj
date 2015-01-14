@@ -12,20 +12,13 @@
   (fn [state scr]
     (:name state)))
 
+(defmethod draw :default [state scr])
+
 (defmulti run 
   "Executes whatever code takes place at this state, side effects 
    and input, and returns a new state stack."
   (fn [state scr stack]
     (:name state)))
 
-(defmethod draw :default 
-  [state scr]
-  (do
-    (screen/put-string scr 10 9  "!!!")
-    (screen/put-string scr 10 10 (str "Unknown state: " state))
-    (screen/put-string scr 10 10 "!!!")))
-
-(defmethod run :default 
-  [state scr stack] 
-  (screen/get-key-blocking scr)
-  [])
+(defmethod run :default [state scr stack]
+  stack)
