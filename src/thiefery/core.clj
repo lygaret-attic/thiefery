@@ -1,11 +1,14 @@
 (ns thiefery.core
   (:require [thiefery.state :as state]
+            [thiefery.map :as map]
             [lanterna.screen :as screen]))
 
 (defmethod state/draw :boot [state scr]
-  (screen/put-string scr 10 10 "Welcome to THIEFERY.")
-  (screen/put-string scr 10 11 "A game of thiefing, adventure and glory.")
-  (screen/put-string scr 10 12 "Press enter to win."))
+  (let [{[rows cols] :bounds world :world} (get-in state [:params :world])]
+    (doseq [row (range 0 rows)
+            col (range 0 cols)]
+      (let [tile (map/tile-at row col world)]
+        (screen/put-string scr row col (:char tile) ile)))))
 
 (defmethod state/run :boot [state scr stack]
   (let* [key (screen/get-key-blocking scr)
@@ -50,7 +53,7 @@
 (defn- main [type]
   (let [scr (screen/get-screen type)]
     (screen/in-screen scr
-      (game-loop scr [(state/make-state :boot)]))))
+      (game-loop scr [(state/make-state :boot {:world (map/random-map 25 25)})]))))
 
 (defn -main [& args]
   (let [args (set args)

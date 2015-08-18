@@ -21,7 +21,7 @@
   [state scr]
   (do
     (screen/put-string scr 10 9  "!!!")
-    (screen/put-string scr 10 10 (str "Unknown state: " state))
+    (screen/put-string scr 10 10 (str "!!! Unknown state: " state))
     (screen/put-string scr 10 10 "!!!")))
 
 (defmethod run :default
