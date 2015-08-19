@@ -20,4 +20,4 @@
 (defn tile-at
   "Gets the tile at the x,y location in the given tilemap"
   [x y tiles]
-  (get-in tiles [y x] oob))
+  (get-in tiles [y x] tiles/oob))
